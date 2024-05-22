@@ -1,26 +1,25 @@
-import { FormEvent } from "react"
+import { FormEvent, useState } from "react"
 import Form from "../components/Form"
 import Button from "../components/Button"
-import { useLocation, useNavigate } from "react-router-dom"
-import formFactory from "../helpers/formFactory"
+import { useLoaderData, useLocation, useNavigate } from "react-router-dom"
+import fetchApi from "../helpers/fetchApi"
+import getBody from "../helpers/getBody"
+import getFields from "../helpers/getFields"
+import { AnyTableKey } from "../types"
 
 export default function Create() {
-    const location = useLocation()
-    const target = location.pathname.split("/")[1]
-    const [returnBodyFromFormData, returnFields] = formFactory(target)
     const navigate = useNavigate()
+    const table = useLocation().pathname.split("/")[1] as AnyTableKey
     const create = async (e: FormEvent) => {
         e.preventDefault()
-        const formData = new FormData(e.target as HTMLFormElement)
-        await fetch("/api/" + target + "/", { method: "POST", body: returnBodyFromFormData(formData), headers: {
-            "Content-Type": "application/json",
-        },})
+        const fd = new FormData(e.target as HTMLFormElement)
+        await fetchApi("POST", table, getBody(fd))
         navigate("..")
     }
-  return (
-    <Form onSubmit={create}>
-        {returnFields()}
-        <Button>Создать</Button>
-    </Form>
-  )
+    return (
+        <Form onSubmit={create}>
+            {getFields(table)}
+            <Button>Создать</Button>
+        </Form>
+    )
 }
