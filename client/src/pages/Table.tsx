@@ -5,6 +5,11 @@ import { AnyTable, AnyTableKey, ModelUnion } from '../types'
 import Alert from '../components/Alert'
 
 export default function Table() {
+    const table = useLocation().pathname.split("/")[1]
+    return <InnerTable key={table}/>
+}
+
+function InnerTable() {
     const [alert, setAlert] = useState<string>("")
     const [error, setError] = useState<string>("")
     const data: ModelUnion[] = useLoaderData() as ModelUnion[]
