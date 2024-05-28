@@ -24,8 +24,8 @@ export function ForeignSelect<T extends ModelUnion>(p: ForeignSelectProps) {
         fetchData()
     }, [])
     return (
-        <select className="transition-all w-full bg-white p-2 px-3 flex-1 rounded-xl focus:bg-fav font-bold text-slate-500 focus:text-white outline outline-2 -outline-offset-2 hover:outline-fav outline-transparent" {...p}>
-            {data && Object.values(data).map(e => <option value={e.id}>{e.name || e.fio}</option>)}
+        <select disabled={!data || !data.length} className="transition-all w-full bg-white p-2 px-3 flex-1 rounded-xl focus:bg-fav font-bold text-slate-500 focus:text-white outline outline-2 -outline-offset-2 hover:outline-fav outline-transparent" {...p}>
+            {(data && data.length) ? Object.values(data).map(e => <option value={e.id}>{e.name || e.fio}</option>) : <option selected value="" disabled>Нет данных в таблице {p.target}</option>}
         </select>
     )
 }
