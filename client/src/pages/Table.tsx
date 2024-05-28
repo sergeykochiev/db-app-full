@@ -16,7 +16,7 @@ function InnerTable() {
     const navigate = useNavigate()
     const path = useLocation().pathname.split("/")
     return ( <>
-        <div className='rounded-b-[20px] bg-slate-200 p-6 flex flex-col gap-4'>
+        <div className='rounded-[20px] bg-slate-200 p-6 flex flex-col gap-4'>
             <Select onChange={(e: ChangeEvent<HTMLSelectElement>) => navigate("/" + path[1] + "/" + e.target.value)} value={path[path.length - 1]}>
                 <option value="create">Создать</option>
                 {data.map(e => <option key={e.id} value={e.id}>{AnyTable[path[1] as AnyTableKey]} {e.id}</option>)}
